@@ -1,0 +1,21 @@
+# Pages CMS config (https://pagescms.org). Not connected to anything yet.
+# Lets church staff swap photos and edit page HTML later without GitHub.
+media:
+  input: assets/img
+  output: /assets/img
+content:
+  - name: home
+    label: Home page
+    type: file
+    path: index.html
+    format: code
+  - name: visit
+    label: Plan Your Visit page
+    type: file
+    path: visit/index.html
+    format: code
+  - name: about
+    label: About / We Believe page
+    type: file
+    path: about/index.html
+    format: code
