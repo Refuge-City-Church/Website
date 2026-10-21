@@ -11,7 +11,7 @@
 <div class="banner">PREVIEW SITE · Items tagged in yellow are placeholders until confirmed by the church</div>
 <header>
   <a class="brand" href="/Website/"><img src="/Website/assets/img/logo.png" alt="Refuge City Church logo">Refuge City</a>
-  <details class="nav"><summary class="menu" aria-label="Menu"><span></span></summary><nav class="panel"><a href="/Website/">Home</a><a href="/Website/visit/">Plan Your Visit</a><a href="/Website/give/">Give</a><a href="/Website/watch/">Watch</a><a href="/Website/next-steps/">Next Steps</a><a href="/Website/kids/">Kids District</a><a href="/Website/members/">Members Hub</a><a href="/Website/about/">About</a><a href="/Website/privacy/">Privacy</a></nav></details>
+  <details class="nav"><summary class="menu" aria-label="Menu" aria-expanded="false" aria-controls="site-menu"><span></span></summary><button type="button" class="nav-backdrop" tabindex="-1" aria-hidden="true"></button><nav class="panel" id="site-menu"><a href="/Website/">Home</a><a href="/Website/visit/">Plan Your Visit</a><a href="/Website/give/">Give</a><a href="/Website/watch/">Watch</a><a href="/Website/next-steps/">Next Steps</a><a href="/Website/kids/">Kids District</a><a href="/Website/members/">Members Hub</a><a href="/Website/about/">About</a><a href="/Website/privacy/">Privacy</a></nav></details>
 </header>
 <main id="main">
 <div class="hero short"><div class="crumb">404</div><h1>Page not <em>found</em></h1></div><section><a class="btn primary wide" href="/Website/">Back home <span class="ar">→</span></a></section>
@@ -32,4 +32,34 @@
   <div class="foot-links"><a href="/Website/visit/">Plan a Visit</a><a href="/Website/give/">Give</a><a href="/Website/members/">Members</a><a href="/Website/about/">About</a><a href="/Website/privacy/">Privacy</a></div>
   <div class="fine" style="margin-top:10px">© Refuge City Church · Preview build, not published.</div>
 </footer>
+<script>
+(function(){
+  var nav = document.querySelector('details.nav');
+  if (!nav) return;
+  var btn = nav.querySelector('summary.menu');
+  var panel = nav.querySelector('.panel');
+  function el(t){ return t && t.nodeType === 1 ? t : (t && t.parentElement); }
+  function sync(focusEl){
+    btn.setAttribute('aria-expanded', nav.open ? 'true' : 'false');
+    if (focusEl) focusEl.focus();
+  }
+  nav.addEventListener('toggle', function(){
+    if (nav.open) sync(panel.querySelector('a'));
+    else sync();
+  });
+  document.addEventListener('keydown', function(e){
+    if ((e.key === 'Escape' || e.key === 'Esc') && nav.open){
+      nav.open = false;
+      sync(btn);
+    }
+  });
+  document.addEventListener('click', function(e){
+    if (!nav.open) return;
+    var t = el(e.target);
+    if (!t) return;
+    if (t.closest('.panel a')){ nav.open = false; sync(); return; }
+    if (t.closest('.nav-backdrop') || !nav.contains(t)){ nav.open = false; sync(btn); }
+  });
+})();
+</script>
 </body></html>

@@ -11,18 +11,18 @@
 <div class="banner">PREVIEW SITE · Items tagged in yellow are placeholders until confirmed by the church</div>
 <header>
   <a class="brand" href="../"><img src="../assets/img/logo.png" alt="Refuge City Church logo">Refuge City</a>
-  <details class="nav"><summary class="menu" aria-label="Menu"><span></span></summary><nav class="panel"><a href="../">Home</a><a href="../visit/">Plan Your Visit</a><a href="../give/">Give</a><a href="../watch/">Watch</a><a href="../next-steps/">Next Steps</a><a href="../kids/">Kids District</a><a href="../members/">Members Hub</a><a href="../about/" aria-current="page">About</a><a href="../privacy/">Privacy</a></nav></details>
+  <details class="nav"><summary class="menu" aria-label="Menu" aria-expanded="false" aria-controls="site-menu"><span></span></summary><button type="button" class="nav-backdrop" tabindex="-1" aria-hidden="true"></button><nav class="panel" id="site-menu"><a href="../">Home</a><a href="../visit/">Plan Your Visit</a><a href="../give/">Give</a><a href="../watch/">Watch</a><a href="../next-steps/">Next Steps</a><a href="../kids/">Kids District</a><a href="../members/">Members Hub</a><a href="../about/" aria-current="page">About</a><a href="../privacy/">Privacy</a></nav></details>
 </header>
 <main id="main">
 <div class="hero short"><div class="crumb">About</div><h1>About <em>Us</em></h1></div>
 <section>
-  <div class="sec-h"><h2>Our Mission</h2><span class="src">From refugecity.cc</span></div>
+  <div class="sec-h"><h2>Our Mission</h2><span class="src review-note">From refugecity.cc</span></div>
   <div class="card prose"><p>We exist to engage our community with the life changing love of Jesus for the purpose of seeing them energized, emancipated, and equipped to emerge as who God created them to be.</p></div>
 </section>
 <section>
-  <div class="sec-h"><h2>We Believe</h2><span class="src">From refugecity.cc</span></div>
+  <div class="sec-h"><h2>We Believe</h2><span class="src review-note">From refugecity.cc</span></div>
   <div class="list"><div class="card"><h3>In Jesus and the Bible</h3><p>Jesus is the Son of God who died on a cross to pardon the sins of anyone who would accept Him. The Bible is God’s Word given to man to guide our lives. Our full doctrinal statement is available upon request.</p></div><div class="card"><h3>In our City</h3><p>We love our city. Is she perfect? No, but we love her anyway! We believe that her best days are just ahead. That is why we serve our community every chance we get. LaGrange has a history of leading the way in offering hope and help to those in need. We are going to take our city back to those roots. God did command us to love our neighbor as ourselves.</p></div><div class="card"><h3>In Each Other</h3><p>At Refuge City, unity is a core value. Being unified in the vision and mission makes us one. Every human being is uniquely gifted. When our gifts are aligned in Christ to work together we are unstoppable. We don’t expect perfection from each other but we do expect progress. We believe there is more in each of us and we provoke each other to do more!</p></div><div class="card"><h3>In You</h3><p>Yes, you heard us. We believe in YOU! We believe that there is more to you. Maybe you have never been to church, or maybe you think that you are too far gone for God to do anything in your life. Are you a discouraged, disenchanted, depleted, and/or defeated Christian? We believe in you. Maybe you have a dream that keeps nagging at the back of your mind. You don’t believe it can happen. We love dreamers, and we believe in you!</p></div></div>
-  <p class="note">Text copied from the church’s current site.</p>
+  <p class="note review-note">Text copied from the church’s current site.</p>
 </section>
 <section>
   <div class="sec-h"><h2>Our Pastor</h2></div>
@@ -45,4 +45,34 @@
   <div class="foot-links"><a href="../visit/">Plan a Visit</a><a href="../give/">Give</a><a href="../members/">Members</a><a href="../about/">About</a><a href="../privacy/">Privacy</a></div>
   <div class="fine" style="margin-top:10px">© Refuge City Church · Preview build, not published.</div>
 </footer>
+<script>
+(function(){
+  var nav = document.querySelector('details.nav');
+  if (!nav) return;
+  var btn = nav.querySelector('summary.menu');
+  var panel = nav.querySelector('.panel');
+  function el(t){ return t && t.nodeType === 1 ? t : (t && t.parentElement); }
+  function sync(focusEl){
+    btn.setAttribute('aria-expanded', nav.open ? 'true' : 'false');
+    if (focusEl) focusEl.focus();
+  }
+  nav.addEventListener('toggle', function(){
+    if (nav.open) sync(panel.querySelector('a'));
+    else sync();
+  });
+  document.addEventListener('keydown', function(e){
+    if ((e.key === 'Escape' || e.key === 'Esc') && nav.open){
+      nav.open = false;
+      sync(btn);
+    }
+  });
+  document.addEventListener('click', function(e){
+    if (!nav.open) return;
+    var t = el(e.target);
+    if (!t) return;
+    if (t.closest('.panel a')){ nav.open = false; sync(); return; }
+    if (t.closest('.nav-backdrop') || !nav.contains(t)){ nav.open = false; sync(btn); }
+  });
+})();
+</script>
 </body></html>

@@ -11,10 +11,10 @@
 <div class="banner">PREVIEW SITE · Items tagged in yellow are placeholders until confirmed by the church</div>
 <header>
   <a class="brand" href="../"><img src="../assets/img/logo.png" alt="Refuge City Church logo">Refuge City</a>
-  <details class="nav"><summary class="menu" aria-label="Menu"><span></span></summary><nav class="panel"><a href="../">Home</a><a href="../visit/" aria-current="page">Plan Your Visit</a><a href="../give/">Give</a><a href="../watch/">Watch</a><a href="../next-steps/">Next Steps</a><a href="../kids/">Kids District</a><a href="../members/">Members Hub</a><a href="../about/">About</a><a href="../privacy/">Privacy</a></nav></details>
+  <details class="nav"><summary class="menu" aria-label="Menu" aria-expanded="false" aria-controls="site-menu"><span></span></summary><button type="button" class="nav-backdrop" tabindex="-1" aria-hidden="true"></button><nav class="panel" id="site-menu"><a href="../">Home</a><a href="../visit/" aria-current="page">Plan Your Visit</a><a href="../give/">Give</a><a href="../watch/">Watch</a><a href="../next-steps/">Next Steps</a><a href="../kids/">Kids District</a><a href="../members/">Members Hub</a><a href="../about/">About</a><a href="../privacy/">Privacy</a></nav></details>
 </header>
 <main id="main">
-<div class="hero short"><div class="crumb">Plan Your Visit</div><h1>We can’t wait to <em>know you!</em></h1><p>That line is from the church’s Church Center page.</p></div>
+<div class="hero short"><div class="crumb">Plan Your Visit</div><h1>We can’t wait to <em>know you!</em></h1></div>
 <div class="info"><b>Sundays:</b> 11am Sunday <span class="tag">[TBD, confirming]</span><br><b>Where:</b> <span class="tag">[NEEDED FROM CHURCH: address TBD, 2447 vs 2457 West Point Rd, LaGrange GA 30240]</span></div>
 <section>
   <a class="btn primary wide" href="#">Open map <span class="ar">→</span></a>
@@ -23,7 +23,7 @@
 <section>
   <div class="sec-h"><h2>What to Expect</h2></div>
   <div class="card prose"><p><span class="tag">[NEEDED FROM CHURCH: parking and where to walk in]</span></p><p><span class="tag">[NEEDED FROM CHURCH: what happens for kids on Sunday]</span></p><p><span class="tag">[NEEDED FROM CHURCH: how long service runs, what to wear]</span></p>
-  <p>The church’s Church Center page says: “Look for Reggie! He will help you find us!”</p></div>
+  <p>Look for Reggie! He will help you find us!</p><p class="review-note">From the church’s Church Center page.</p></div>
 </section>
 <section>
   <div class="sec-h"><h2>Let Us Know</h2><span class="tag">[PREVIEW ONLY]</span></div>
@@ -57,4 +57,34 @@
   <div class="foot-links"><a href="../visit/">Plan a Visit</a><a href="../give/">Give</a><a href="../members/">Members</a><a href="../about/">About</a><a href="../privacy/">Privacy</a></div>
   <div class="fine" style="margin-top:10px">© Refuge City Church · Preview build, not published.</div>
 </footer>
+<script>
+(function(){
+  var nav = document.querySelector('details.nav');
+  if (!nav) return;
+  var btn = nav.querySelector('summary.menu');
+  var panel = nav.querySelector('.panel');
+  function el(t){ return t && t.nodeType === 1 ? t : (t && t.parentElement); }
+  function sync(focusEl){
+    btn.setAttribute('aria-expanded', nav.open ? 'true' : 'false');
+    if (focusEl) focusEl.focus();
+  }
+  nav.addEventListener('toggle', function(){
+    if (nav.open) sync(panel.querySelector('a'));
+    else sync();
+  });
+  document.addEventListener('keydown', function(e){
+    if ((e.key === 'Escape' || e.key === 'Esc') && nav.open){
+      nav.open = false;
+      sync(btn);
+    }
+  });
+  document.addEventListener('click', function(e){
+    if (!nav.open) return;
+    var t = el(e.target);
+    if (!t) return;
+    if (t.closest('.panel a')){ nav.open = false; sync(); return; }
+    if (t.closest('.nav-backdrop') || !nav.contains(t)){ nav.open = false; sync(btn); }
+  });
+})();
+</script>
 </body></html>

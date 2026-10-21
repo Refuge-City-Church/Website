@@ -20,6 +20,37 @@ FB_URL = 'https://www.facebook.com/p/Refuge-City-Church-61572074312910/'
 IG_URL = 'https://www.instagram.com/refugecity.cc/'
 GROUPS_URL = 'https://refuge-city-church-507680.churchcenter.com/groups'
 OUT = pathlib.Path(__file__).resolve().parent.parent
+# Small menu behavior. Without JS the <details> menu still opens and closes, and the icon still becomes an X.
+MENU_JS = '''<script>
+(function(){
+  var nav = document.querySelector('details.nav');
+  if (!nav) return;
+  var btn = nav.querySelector('summary.menu');
+  var panel = nav.querySelector('.panel');
+  function el(t){ return t && t.nodeType === 1 ? t : (t && t.parentElement); }
+  function sync(focusEl){
+    btn.setAttribute('aria-expanded', nav.open ? 'true' : 'false');
+    if (focusEl) focusEl.focus();
+  }
+  nav.addEventListener('toggle', function(){
+    if (nav.open) sync(panel.querySelector('a'));
+    else sync();
+  });
+  document.addEventListener('keydown', function(e){
+    if ((e.key === 'Escape' || e.key === 'Esc') && nav.open){
+      nav.open = false;
+      sync(btn);
+    }
+  });
+  document.addEventListener('click', function(e){
+    if (!nav.open) return;
+    var t = el(e.target);
+    if (!t) return;
+    if (t.closest('.panel a')){ nav.open = false; sync(); return; }
+    if (t.closest('.nav-backdrop') || !nav.contains(t)){ nav.open = false; sync(btn); }
+  });
+})();
+</script>'''
 
 def tag(t, dark=False): return f'<span class="tag{" dark" if dark else ""}">[{t}]</span>'
 TIME = '11am Sunday'
@@ -46,7 +77,7 @@ def page(path, title, body, desc='Refuge City Church in LaGrange, GA. Preview si
 <div class="banner">PREVIEW SITE · Items tagged in yellow are placeholders until confirmed by the church</div>
 <header>
   <a class="brand" href="/"><img src="/assets/img/logo.png" alt="Refuge City Church logo">Refuge City</a>
-  <details class="nav"><summary class="menu" aria-label="Menu"><span></span></summary><nav class="panel">{nav}</nav></details>
+  <details class="nav"><summary class="menu" aria-label="Menu" aria-expanded="false" aria-controls="site-menu"><span></span></summary><button type="button" class="nav-backdrop" tabindex="-1" aria-hidden="true"></button><nav class="panel" id="site-menu">{nav}</nav></details>
 </header>
 <main id="main">
 {body}
@@ -67,6 +98,7 @@ def page(path, title, body, desc='Refuge City Church in LaGrange, GA. Preview si
   <div class="foot-links"><a href="/visit/">Plan a Visit</a><a href="/give/">Give</a><a href="/members/">Members</a><a href="/about/">About</a><a href="/privacy/">Privacy</a></div>
   <div class="fine" style="margin-top:10px">© Refuge City Church · Preview build, not published.</div>
 </footer>
+{MENU_JS}
 </body></html>
 '''
     if path == '/404':
@@ -92,32 +124,33 @@ HUB = f'''<div class="hub">
     <a class="tile" href="#"><div class="ti">{IC_CHART}</div><div><b>Giving History</b><small>[{GIVE_TAG}]</small></div></a>
   </div>'''
 
-STEPS = f'''<div class="step"><div class="n">01</div><div><h3>I'm New</h3><p>[PLACEHOLDER] What a first visit looks like.</p></div></div>
-    <div class="step"><div class="n">02</div><div><h3>Join a Group</h3><p>Browse groups on Church Center. [CONFIRM]</p></div></div>
-    <div class="step"><div class="n">03</div><div><h3>Serve</h3><p>[NEEDED FROM CHURCH: serve info]</p></div></div>'''
+STEPS = f'''<a class="step" href="/visit/"><div class="n" aria-hidden="true">01</div><div><h3>I'm New</h3><p>[PLACEHOLDER] What a first visit looks like.</p></div><span class="ar" aria-hidden="true">→</span></a>
+    <a class="step" href="{GROUPS_URL}"><div class="n" aria-hidden="true">02</div><div><h3>Join a Group</h3><p>Browse groups on Church Center. [CONFIRM]</p></div><span class="ar" aria-hidden="true">→</span></a>
+    <a class="step" href="/next-steps/"><div class="n" aria-hidden="true">03</div><div><h3>Serve</h3><p>[NEEDED FROM CHURCH: serve info]</p></div><span class="ar" aria-hidden="true">→</span></a>'''
 
 # ---------- HOME ----------
 home = f'''<div class="hero">
   <div class="ph-label">PLACEHOLDER PHOTO<small>Family at home / church family moment</small></div>
   <div class="eyebrow">Refuge City Church · LaGrange, GA</div>
   <h1><em>Family.</em> Building. Together.<span class="sub">Starting in your home.</span></h1>
-  <p class="quote">“There is more to you and we want to help you discover it.”</p><div class="src dark">From Refuge City's Church Center page</div>
 </div>
 <div class="ctas">
   <a class="btn primary" href="/visit/">Plan Your Visit <span class="ar">→</span></a>
   <a class="btn dark" href="/give/">Give <span class="ar">→</span></a>
-  <a class="btn light" href="/watch/"><span>Watch<span class="soon">COMING SOON</span></span> <span class="ar">▶</span></a>
+  <a class="btn light" href="/watch/"><span>Watch<span class="soon">COMING SOON</span></span> <span class="ar">→</span></a>
 </div>
+<p class="quote">“There is more to you and we want to help you discover it.”</p>
+<p class="review-note">From Refuge City's Church Center page</p>
 {INFO}
 <section>
-  <div class="sec-h"><h2>We Believe</h2><span class="src">From refugecity.cc</span></div>
+  <div class="sec-h"><h2>We Believe</h2><span class="src review-note">From refugecity.cc</span></div>
   <div class="card values">
     <div class="val"><div class="ic">01</div><div><h3>In Jesus and the Bible</h3><p>“The Bible is God’s Word given to man to guide our lives.”</p></div></div>
     <div class="val"><div class="ic">02</div><div><h3>In our City</h3><p>“We love our city.” “We believe that her best days are just ahead.”</p></div></div>
     <div class="val"><div class="ic">03</div><div><h3>In Each Other</h3><p>“At Refuge City, unity is a core value.”</p></div></div>
     <div class="val"><div class="ic">04</div><div><h3>In You</h3><p>“Yes, you heard us. We believe in YOU!”</p></div></div>
   </div>
-  <p class="note">Excerpts quoted from the church site. <a href="/about/" style="color:#167a3c;font-weight:700">Read all of We Believe →</a></p>
+  <p class="note"><span class="review-note">Excerpts quoted from the church site. </span><a class="text-link" href="/about/" style="color:#167a3c;font-weight:700">Read all of We Believe&nbsp;→</a></p>
 </section>
 <section>
   <div class="sec-h"><h2>Next Steps</h2><a href="/next-steps/">See all →</a></div>
@@ -136,13 +169,13 @@ home = f'''<div class="hero">
   </div>
 </section>
 <section>
-  <div class="sec-h"><h2>Members Hub</h2><a href="/members/">Open →</a></div>
+  <div class="sec-h"><h2>Members Hub</h2><a href="/members/">Open Members Hub →</a></div>
   {HUB}
 </section>'''
 page('/', 'Home', home)
 
 # ---------- VISIT ----------
-visit = subhero('Plan Your Visit', 'We can’t wait to <em>know you!</em>', 'That line is from the church’s Church Center page.') + f'''
+visit = subhero('Plan Your Visit', 'We can’t wait to <em>know you!</em>') + f'''
 {INFO}
 <section>
   <a class="btn primary wide" href="#">Open map <span class="ar">→</span></a>
@@ -151,7 +184,7 @@ visit = subhero('Plan Your Visit', 'We can’t wait to <em>know you!</em>', 'Tha
 <section>
   <div class="sec-h"><h2>What to Expect</h2></div>
   <div class="card prose"><p>{tag("NEEDED FROM CHURCH: parking and where to walk in")}</p><p>{tag("NEEDED FROM CHURCH: what happens for kids on Sunday")}</p><p>{tag("NEEDED FROM CHURCH: how long service runs, what to wear")}</p>
-  <p>The church’s Church Center page says: “Look for Reggie! He will help you find us!”</p></div>
+  <p>Look for Reggie! He will help you find us!</p><p class="review-note">From the church’s Church Center page.</p></div>
 </section>
 <section>
   <div class="sec-h"><h2>Let Us Know</h2>{tag("PREVIEW ONLY")}</div>
@@ -189,7 +222,7 @@ watch = subhero('Watch', 'Watch', '') + f'''
   <div class="card soon-card"><span class="soon" style="font:700 11px Inter;background:#ffe78a;color:#4a3800;padding:6px 10px;border-radius:999px">COMING SOON</span>
   <div class="big">Live stream</div>
   <p class="prose">The live stream will show up here. {tag("NEEDED FROM CHURCH: stream platform and channel")}</p></div>
-  <div class="card prose" style="margin-top:12px"><p>Until then, find us on <a href="{FB_URL}" style="color:#167a3c;font-weight:700">Facebook</a> and <a href="{IG_URL}" style="color:#167a3c;font-weight:700">Instagram</a>.</p></div>
+  <div class="card prose" style="margin-top:12px"><p>Until then, find us on <a class="text-link" href="{FB_URL}" style="color:#167a3c;font-weight:700">Facebook</a> and <a class="text-link" href="{IG_URL}" style="color:#167a3c;font-weight:700">Instagram</a>.</p></div>
 </section>'''
 page('/watch/', 'Watch', watch)
 
@@ -238,13 +271,13 @@ BEL = [
 ]
 about = subhero('About', 'About <em>Us</em>') + f'''
 <section>
-  <div class="sec-h"><h2>Our Mission</h2><span class="src">From refugecity.cc</span></div>
+  <div class="sec-h"><h2>Our Mission</h2><span class="src review-note">From refugecity.cc</span></div>
   <div class="card prose"><p>We exist to engage our community with the life changing love of Jesus for the purpose of seeing them energized, emancipated, and equipped to emerge as who God created them to be.</p></div>
 </section>
 <section>
-  <div class="sec-h"><h2>We Believe</h2><span class="src">From refugecity.cc</span></div>
+  <div class="sec-h"><h2>We Believe</h2><span class="src review-note">From refugecity.cc</span></div>
   <div class="list">{''.join(f'<div class="card"><h3>{h}</h3><p>{t}</p></div>' for h, t in BEL)}</div>
-  <p class="note">Text copied from the church’s current site.</p>
+  <p class="note review-note">Text copied from the church’s current site.</p>
 </section>
 <section>
   <div class="sec-h"><h2>Our Pastor</h2></div>
