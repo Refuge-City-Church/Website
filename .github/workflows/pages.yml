@@ -30,10 +30,10 @@ jobs:
       - name: Build _site
         run: |
           mkdir _site
-          rsync -a ./ _site/ \
-            --exclude '.git' --exclude '.github' --exclude '_site' \
-            --exclude 'tools' --exclude 'README.md' --exclude '.pages.yml' \
-            --exclude '.gitignore' --exclude 'shots'
+          tar -cf - --exclude=./.git --exclude=./.github --exclude=./_site \
+            --exclude=./tools --exclude=./README.md --exclude=./.pages.yml \
+            --exclude=./.gitignore --exclude=./shots . | tar -xf - -C _site
+          find _site -maxdepth 1 | sort
 
       - uses: actions/upload-pages-artifact@v5
         with:
