@@ -15,7 +15,7 @@ header{position:sticky;top:0;z-index:20;display:flex;align-items:center;justify-
 .nav[open] .menu span{background:transparent}
 .nav[open] .menu span:before{top:0;transform:rotate(45deg)}
 .nav[open] .menu span:after{top:0;transform:rotate(-45deg)}
-.hero{position:relative;min-height:280px;padding:20px 20px 22px;color:#fff;display:flex;flex-direction:column;justify-content:flex-end;background:
+.hero{position:relative;min-height:280px;padding:12px 20px 12px;color:#fff;display:flex;flex-direction:column;justify-content:flex-end;background:
  linear-gradient(180deg,rgba(14,14,14,.05) 0%,rgba(14,14,14,.55) 55%,rgba(14,14,14,.95) 100%),
  radial-gradient(circle at 30% 35%,#f2b880 0,#c97b4a 22%,transparent 46%),
  radial-gradient(circle at 72% 30%,#e9a46c 0,#a85e36 20%,transparent 42%),
@@ -23,12 +23,15 @@ header{position:sticky;top:0;z-index:20;display:flex;align-items:center;justify-
  linear-gradient(135deg,#3b2a1e,#1e3b2a);border-radius:0 0 32px 32px;overflow:hidden}
 .ph-label{position:absolute;top:18px;left:50%;transform:translateX(-50%);background:rgba(0,0,0,.55);border:2px dashed rgba(255,255,255,.7);padding:8px 14px;border-radius:12px;font:700 12px Inter;letter-spacing:1px;text-align:center;white-space:nowrap}
 .ph-label small{display:block;font-weight:500;letter-spacing:0;opacity:.85;margin-top:3px}
+/* Home hero: keep the photo label in flow, in the top-left corner, so it cannot cover the eyebrow. */
+.hero:not(.short) > .ph-label{position:static;left:auto;top:auto;transform:none;align-self:flex-start;margin:0 0 8px;padding:4px 8px;font-size:10px;letter-spacing:.4px;line-height:1.25;text-align:left;max-width:100%}
+.hero:not(.short) > .ph-label small{font-size:10px;margin-top:1px}
 .eyebrow{font:700 12px Inter;letter-spacing:2px;text-transform:uppercase;color:#8de0ad;margin-bottom:10px}
 .hero h1{font-size:50px;line-height:.98;font-weight:700}
 .hero h1 em{font-style:normal;color:var(--green)}
 .hero h1 .sub{display:block;font-size:30px;line-height:1.1;margin-top:10px;color:#fff;text-transform:none;font-weight:500}
 .hero p{margin-top:14px;font-size:15px;line-height:1.5;opacity:.9}
-.ctas{display:grid;gap:10px;padding:22px 18px 6px;margin-top:-4px}
+.ctas{display:grid;gap:10px;padding:16px 18px 6px;margin-top:-4px}
 .ctas .btn{padding:16px 20px}
 .btn{display:flex;align-items:center;justify-content:space-between;padding:20px 22px;border-radius:var(--r);font-size:24px;font-weight:700;box-shadow:0 6px 18px rgba(0,0,0,.08)}
 .btn .ar{font-size:26px}
