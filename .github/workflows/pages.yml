@@ -25,6 +25,9 @@ jobs:
       - uses: actions/checkout@v7
 
       - uses: actions/configure-pages@v6
+        with:
+          # Creates the Pages site (build_type workflow) when it does not exist yet.
+          enablement: true
 
       # Copy only the public site into _site (leave out tools, README, CMS config, repo files)
       - name: Build _site
