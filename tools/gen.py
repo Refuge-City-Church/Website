@@ -5,10 +5,10 @@
 #
 # Links: internal links and asset paths are written root relative ("/visit/") below,
 # then rewritten to RELATIVE paths per page ("../visit/") so the site works both
-# locally and under the GitHub Pages project path /website/.
+# locally and under the GitHub Pages project path /Website/.
 # 404.html can be served by GitHub Pages at any depth, so it uses SITE_BASE instead.
 import re, pathlib
-SITE_BASE = '/website/'   # https://refuge-city-church.github.io/website/
+SITE_BASE = '/Website/'   # https://refuge-city-church.github.io/Website/
 IC_CHECK = '''<svg viewBox="0 0 24 24"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>'''
 IC_APP = '''<svg viewBox="0 0 24 24"><rect x="6" y="2" width="12" height="20" rx="3"/><path d="M11 18h2"/></svg>'''
 IC_GROUPS = '''<svg viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.5"/><path d="M2 20c0-3.5 3-6 7-6s7 2.5 7 6"/><circle cx="17" cy="9" r="2.5"/><path d="M17 14c3 0 5 2 5 5"/></svg>'''

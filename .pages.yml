@@ -2,7 +2,7 @@
 # Lets church staff swap photos and edit page HTML later without GitHub.
 media:
   input: assets/img
-  output: /website/assets/img   # GitHub Pages project path; change if the site moves
+  output: /Website/assets/img   # GitHub Pages project path; change if the site moves
 content:
   - name: home
     label: Home page

@@ -3,7 +3,7 @@
 Plain static site: HTML + one CSS file, no build step, no backend, no payment code, no JavaScript.
 Mobile first (designed at 390px wide). Hosted on **GitHub Pages** as a project site:
 
-**https://refuge-city-church.github.io/website/** (org `Refuge-City-Church`, repo `website`, no custom domain)
+**https://refuge-city-church.github.io/Website/** (org `Refuge-City-Church`, repo `Website`, no custom domain)
 
 refugecity.cc is **not touched** by this repo. The current Squarespace site, its domain, DNS and the church's Google email all stay exactly as they are.
 
@@ -11,7 +11,7 @@ Yellow `[PLACEHOLDER]`, `[NEEDED FROM CHURCH]`, `[TBD]` and `[CONFIRM]` tags mar
 
 ## Pages
 
-| URL (under /website/) | File |
+| URL (under /Website/) | File |
 | --- | --- |
 | `/` | `index.html` |
 | `visit/` | `visit/index.html` (form is a preview only, it does not submit) |
@@ -26,10 +26,10 @@ Yellow `[PLACEHOLDER]`, `[NEEDED FROM CHURCH]`, `[TBD]` and `[CONFIRM]` tags mar
 
 Shared styles: `assets/css/site.css` (hand edited). Logo: `assets/img/logo.png`.
 
-## Links and the /website/ path
+## Links and the /Website/ path
 
-All internal links and asset paths are **relative** (`../visit/`, `./assets/...`), so the site works locally and under `/website/`.
-The one exception is `404.html`: GitHub Pages can serve it at any depth, so its links use the absolute `/website/` path (set by `SITE_BASE` in `tools/gen.py`). If the repo is ever renamed or moved to a custom domain, change `SITE_BASE` and the `media.output` path in `.pages.yml`, then regenerate.
+All internal links and asset paths are **relative** (`../visit/`, `./assets/...`), so the site works locally and under `/Website/`.
+The one exception is `404.html`: GitHub Pages can serve it at any depth, so its links use the absolute `/Website/` path (set by `SITE_BASE` in `tools/gen.py`). If the repo is ever renamed or moved to a custom domain, change `SITE_BASE` and the `media.output` path in `.pages.yml`, then regenerate.
 
 ## Editing pages
 
@@ -49,7 +49,7 @@ Quick look:
 python3 -m http.server 8080      # from the repo root, then open http://localhost:8080
 ```
 
-Check it exactly like GitHub Pages (served under /website/), with screenshots and a link check:
+Check it exactly like GitHub Pages (served under /Website/), with screenshots and a link check:
 
 ```
 pip install playwright && python -m playwright install chromium
@@ -59,15 +59,15 @@ python3 tools/shots.py           # screenshots go to ./shots (git ignored)
 ## Search engines
 
 This is a preview, so it is kept out of search: every page has `<meta name="robots" content="noindex, nofollow">` and `robots.txt` disallows everything.
-Note: on a project site, crawlers read robots.txt at the org root (`refuge-city-church.github.io/robots.txt`), not under `/website/`, so the meta tags are what really count. Remove both at launch.
+Note: on a project site, crawlers read robots.txt at the org root (`refuge-city-church.github.io/robots.txt`), not under `/Website/`, so the meta tags are what really count. Remove both at launch.
 
 ## GitHub Pages setup (Eric does this, once)
 
 1. Create the GitHub org **Refuge-City-Church** (owned by the church account, see `build-plan.md`).
-2. Create a **public** repo named **website** in that org (GitHub Pages on free orgs needs a public repo). Don't add a README or license on GitHub; this repo already has them.
+2. Create a **public** repo named **Website** in that org (GitHub Pages on free orgs needs a public repo). Don't add a README or license on GitHub; this repo already has them.
 3. Push this repo's `main` branch to it.
 4. In the repo: **Settings > Pages > Build and deployment > Source: GitHub Actions**. Leave **Custom domain empty**.
-5. The workflow `.github/workflows/pages.yml` runs on every push to `main` (or by hand from the Actions tab: "Deploy to GitHub Pages" > Run workflow). It publishes only the site files to `https://refuge-city-church.github.io/website/` (it leaves out `tools/`, `README.md` and `.pages.yml`).
+5. The workflow `.github/workflows/pages.yml` runs on every push to `main` (or by hand from the Actions tab: "Deploy to GitHub Pages" > Run workflow). It publishes only the site files to `https://refuge-city-church.github.io/Website/` (it leaves out `tools/`, `README.md` and `.pages.yml`).
 6. Optional: Settings > Branches, protect `main` so changes come in by pull request.
 
 Note: GitHub Pages has no built in preview links for pull requests. Review changes locally (`tools/shots.py`) or on the live preview URL after merge.

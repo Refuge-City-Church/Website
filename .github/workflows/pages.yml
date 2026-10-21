@@ -1,4 +1,4 @@
-# Deploys the site to GitHub Pages: https://refuge-city-church.github.io/website/
+# Deploys the site to GitHub Pages: https://refuge-city-church.github.io/Website/
 name: Deploy to GitHub Pages
 
 on:

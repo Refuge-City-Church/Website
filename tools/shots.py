@@ -1,4 +1,4 @@
-"""Local check: serves the repo under /website/ (like GitHub Pages), takes 390x844 @2x
+"""Local check: serves the repo under /Website/ (like GitHub Pages), takes 390x844 @2x
 screenshots of every page and checks that internal links and assets resolve.
 
   pip install playwright && python -m playwright install chromium
@@ -18,11 +18,11 @@ PAGES = {'home': '', 'visit': 'visit/', 'give': 'give/', 'watch': 'watch/', 'nex
          'kids': 'kids/', 'members': 'members/', 'about': 'about/', 'privacy': 'privacy/',
          '404': 'some/missing/page/'}
 
-tmp = tempfile.mkdtemp(); os.symlink(ROOT, os.path.join(tmp, 'website'))
+tmp = tempfile.mkdtemp(); os.symlink(ROOT, os.path.join(tmp, 'Website'))
 
 class H(SimpleHTTPRequestHandler):
     def log_message(self, *a): pass
-    def send_error(self, code, *a, **k):  # mimic GitHub Pages: serve /website/404.html for missing files
+    def send_error(self, code, *a, **k):  # mimic GitHub Pages: serve /Website/404.html for missing files
         if code == 404:
             body = (ROOT / '404.html').read_bytes()
             self.send_response(404); self.send_header('Content-Type', 'text/html'); self.end_headers(); self.wfile.write(body)
@@ -31,7 +31,7 @@ class H(SimpleHTTPRequestHandler):
 s = socket.socket(); s.bind(('127.0.0.1', 0)); port = s.getsockname()[1]; s.close()
 srv = ThreadingHTTPServer(('127.0.0.1', port), functools.partial(H, directory=tmp))
 threading.Thread(target=srv.serve_forever, daemon=True).start()
-base = f'http://127.0.0.1:{port}/website/'
+base = f'http://127.0.0.1:{port}/Website/'
 
 seen, bad, problems = set(), [], []
 with sync_playwright() as p:
@@ -53,7 +53,7 @@ with sync_playwright() as p:
         for h in pg.eval_on_selector_all('a[href],link[href],img[src]', 'els=>els.map(e=>e.getAttribute("href")||e.getAttribute("src"))'):
             full = urljoin(pg.url, h).split('#')[0]
             if urlparse(full).netloc == urlparse(base).netloc and '/missing/' not in full:
-                if not urlparse(full).path.startswith('/website/'): bad.append((name, h, 'outside /website/'))
+                if not urlparse(full).path.startswith('/Website/'): bad.append((name, h, 'outside /Website/'))
                 seen.add(full)
     b.close()
 for u in sorted(seen):
