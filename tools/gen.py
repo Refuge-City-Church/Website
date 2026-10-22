@@ -139,9 +139,9 @@ home = f'''<div class="hero">
   <a class="btn dark" href="/give/">Give <span class="ar">→</span></a>
   <a class="btn light" href="/watch/"><span>Watch<span class="soon">COMING SOON</span></span> <span class="ar">→</span></a>
 </div>
+{INFO}
 <p class="quote">“There is more to you and we want to help you discover it.”</p>
 <p class="review-note">From Refuge City's Church Center page</p>
-{INFO}
 <section>
   <div class="sec-h"><h2>We Believe</h2><span class="src review-note">From refugecity.cc</span></div>
   <div class="card values">
@@ -169,7 +169,7 @@ home = f'''<div class="hero">
   </div>
 </section>
 <section>
-  <div class="sec-h"><h2>Members Hub</h2><a href="/members/">Open Members Hub →</a></div>
+  <div class="sec-h"><h2>Members Hub</h2><a href="/members/">Open hub&nbsp;→</a></div>
   {HUB}
 </section>'''
 page('/', 'Home', home)
@@ -208,7 +208,7 @@ give = subhero('Give', 'Give', tag(GIVE_TAG, True)) + f'''
 <section>
   <div class="card prose"><p>{tag("NEEDED FROM CHURCH: short giving message in the pastor’s words")}</p></div>
   <div style="margin-top:14px"><a class="btn primary wide" href="#">Give online <span class="ar">→</span></a></div>
-  <p class="note">{tag(GIVE_TAG)} The button will link out to the giving tool the pastor keeps. This site never handles payments.</p>
+  <p class="note">{tag(GIVE_TAG)} <span class="review-note">The button will link out to the giving tool the pastor keeps. This site never handles payments.</span></p>
 </section>
 <section>
   <div class="sec-h"><h2>Giving History</h2></div>
@@ -222,7 +222,7 @@ watch = subhero('Watch', 'Watch', '') + f'''
   <div class="card soon-card"><span class="soon" style="font:700 11px Inter;background:#ffe78a;color:#4a3800;padding:6px 10px;border-radius:999px">COMING SOON</span>
   <div class="big">Live stream</div>
   <p class="prose">The live stream will show up here. {tag("NEEDED FROM CHURCH: stream platform and channel")}</p></div>
-  <div class="card prose" style="margin-top:12px"><p>Until then, find us on <a class="text-link" href="{FB_URL}" style="color:#167a3c;font-weight:700">Facebook</a> and <a class="text-link" href="{IG_URL}" style="color:#167a3c;font-weight:700">Instagram</a>.</p></div>
+  <div class="card prose" style="margin-top:12px"><p>Until then, find us here:</p><div class="social-pills"><a class="pill" href="{FB_URL}">Facebook&nbsp;→</a><a class="pill" href="{IG_URL}">Instagram&nbsp;→</a></div></div>
 </section>'''
 page('/watch/', 'Watch', watch)
 

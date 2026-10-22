@@ -37,13 +37,13 @@ header{position:sticky;top:0;z-index:20;display:flex;align-items:center;justify-
 .btn .ar{font-size:26px}
 .btn.primary{background:var(--green-d);color:#fff}
 .btn.dark{background:var(--black);color:#fff}
-.btn.light{background:#fff;color:var(--ink);border:2px solid #e4e4e4}
-.ctas .btn.light{background:#e3f4ea;color:#0e0e0e;border:2px solid #1b1b1b}
+.btn.light{background:#fff;color:var(--ink);border:2px solid #1b1b1b}
+.ctas .btn.light{background:#e3f4ea;color:#0e0e0e}
 .btn .soon{font:700 10px Inter;letter-spacing:.8px;background:#ffe78a;color:#4a3800;padding:5px 8px;border-radius:999px;margin-left:8px;vertical-align:middle}
-.info{margin:14px 18px 0;padding:14px 16px;border-radius:16px;background:#fff;border:1px solid #e7e7e7;font-size:14px;line-height:1.6}
+.info{margin:12px 18px 0;padding:14px 16px;border-radius:16px;background:#fff;border:1px solid #e7e7e7;font-size:14px;line-height:1.6}
 section{padding:28px 18px 0}
-.sec-h{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
-.sec-h h2{font-size:32px;line-height:1}
+.sec-h{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:14px}
+.sec-h h2{font-size:32px;line-height:1;white-space:nowrap}
 .sec-h a{display:inline-flex;align-items:center;min-height:44px;padding:0 4px;font-size:14px;font-weight:700;color:var(--green-d)}
 a.text-link{display:inline-flex;align-items:center;min-height:44px}
 .card{background:#fff;border-radius:var(--r);padding:20px;border:1px solid #ececec;box-shadow:0 4px 14px rgba(0,0,0,.04)}
@@ -83,7 +83,8 @@ footer .tagline{font:500 13px Oswald;letter-spacing:1.5px;text-transform:upperca
 footer hr{border:0;border-top:1px solid #2a2a2a;margin:16px 0}
 footer .fine{font-size:12px;color:#8a8a8a}
 .banner{background:#ffe78a;color:#4a3800;font:700 11px Inter;text-align:center;padding:6px 10px;letter-spacing:.4px}
-.quote{margin:16px 18px 0;font:500 21px/1.3 Oswald,sans-serif;color:var(--ink)}
+.quote{margin:22px 18px 0;font:500 21px/1.3 Oswald,sans-serif;color:var(--ink)}
+.social-pills{display:flex;flex-wrap:wrap;gap:10px;margin-top:12px}
 .src{display:inline-block;align-self:flex-start;margin-top:8px;font:700 10px Inter;letter-spacing:.6px;text-transform:uppercase;color:#6b6b6b;background:#ececec;padding:4px 8px;border-radius:999px}
 .src.dark{color:#8de0ad;background:rgba(32,157,80,.18)}
 /* Hidden now. At launch, hide .banner the same way: one class, display:none. */
