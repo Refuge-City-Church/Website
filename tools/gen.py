@@ -62,8 +62,15 @@ NAV = [('/', 'Home'), ('/visit/', 'Plan Your Visit'), ('/give/', 'Give'), ('/wat
        ('/next-steps/', 'Next Steps'), ('/kids/', 'Kids District'), ('/members/', 'Members Hub'),
        ('/about/', 'About'), ('/privacy/', 'Privacy')]
 
-def page(path, title, body, desc='Refuge City Church in LaGrange, GA. Preview site.'):
+def page(path, title, body, desc='Refuge City Church in LaGrange, GA. Preview site.', social=True):
     nav = ''.join(f'<a href="{h}"{" aria-current=\"page\"" if h == path else ""}>{n}</a>' for h, n in NAV)
+    social_block = f'''<div class="social">
+  <a href="{FB_URL}" aria-label="Facebook">{FB}</a>
+  <a href="{IG_URL}" aria-label="Instagram">{IG}</a>
+  <a class="ph" href="#" aria-label="YouTube (placeholder)">{YT}</a>
+</div>
+<p class="soc-note">Facebook: Refuge City Church · Instagram: @refugecity.cc<br>YouTube link: [NEEDED FROM CHURCH: channel URL]</p>
+''' if social else ''
     html = f'''<!DOCTYPE html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>{title} | Refuge City Church</title>
@@ -82,20 +89,14 @@ def page(path, title, body, desc='Refuge City Church in LaGrange, GA. Preview si
 <main id="main">
 {body}
 </main>
-<div class="social">
-  <a href="{FB_URL}" aria-label="Facebook">{FB}</a>
-  <a href="{IG_URL}" aria-label="Instagram">{IG}</a>
-  <a class="ph" href="#" aria-label="YouTube (placeholder)">{YT}</a>
-</div>
-<p class="soc-note">Facebook: Refuge City Church · Instagram: @refugecity.cc<br>YouTube link: [NEEDED FROM CHURCH: channel URL]</p>
-<footer>
+{social_block}<footer>
   <div class="brand"><img src="/assets/img/logo.png" alt="">Refuge City Church</div>
   <div class="tagline">Energize · Emancipate · Equip · Emerge</div>
   <div><b style="color:#fff">Address:</b> {tag(ADDR_TAG, True)}</div>
   <div><b style="color:#fff">Contact:</b> {tag("NEEDED FROM CHURCH: phone / email", True)}</div>
   <div><b style="color:#fff">Sundays:</b> {TIME} {tag(TIME_TAG, True)}</div>
   <hr>
-  <div class="foot-links"><a href="/visit/">Plan a Visit</a><a href="/give/">Give</a><a href="/members/">Members</a><a href="/about/">About</a><a href="/privacy/">Privacy</a></div>
+  <div class="foot-links"><a href="/visit/">Plan Your Visit</a><a href="/give/">Give</a><a href="/watch/">Watch</a><a href="/members/">Members</a><a href="/about/">About</a><a href="/privacy/">Privacy</a></div>
   <div class="fine" style="margin-top:10px">© Refuge City Church · Preview build, not published.</div>
 </footer>
 {MENU_JS}
@@ -113,7 +114,8 @@ def page(path, title, body, desc='Refuge City Church in LaGrange, GA. Preview si
     f.write_text(html)
 
 def subhero(crumb, h1, sub=''):
-    return f'''<div class="hero short"><div class="crumb">{crumb}</div><h1>{h1}</h1>{f'<p>{sub}</p>' if sub else ''}</div>'''
+    crumb_html = f'<div class="crumb">{crumb}</div>' if crumb else ''
+    return f'''<div class="hero short">{crumb_html}<h1>{h1}</h1>{f'<p>{sub}</p>' if sub else ''}</div>'''
 
 INFO = f'''<div class="info"><b>Sundays:</b> {TIME} {tag(TIME_TAG)}<br><b>Where:</b> {tag(ADDR_TAG)}</div>'''
 
@@ -204,7 +206,7 @@ visit = subhero('Plan Your Visit', 'We can’t wait to <em>know you!</em>') + f'
 page('/visit/', 'Plan Your Visit', visit)
 
 # ---------- GIVE ----------
-give = subhero('Give', 'Give', tag(GIVE_TAG, True)) + f'''
+give = subhero('', 'Give', tag(GIVE_TAG, True)) + f'''
 <section>
   <div class="card prose"><p>{tag("NEEDED FROM CHURCH: short giving message in the pastor’s words")}</p></div>
   <div style="margin-top:14px"><a class="btn primary wide" href="#">Give online <span class="ar">→</span></a></div>
@@ -217,17 +219,17 @@ give = subhero('Give', 'Give', tag(GIVE_TAG, True)) + f'''
 page('/give/', 'Give', give)
 
 # ---------- WATCH ----------
-watch = subhero('Watch', 'Watch', '') + f'''
+watch = subhero('', 'Watch', '') + f'''
 <section>
   <div class="card soon-card"><span class="soon" style="font:700 11px Inter;background:#ffe78a;color:#4a3800;padding:6px 10px;border-radius:999px">COMING SOON</span>
   <div class="big">Live stream</div>
   <p class="prose">The live stream will show up here. {tag("NEEDED FROM CHURCH: stream platform and channel")}</p></div>
   <div class="card prose" style="margin-top:12px"><p>Until then, find us here:</p><div class="social-pills"><a class="pill" href="{FB_URL}">Facebook&nbsp;→</a><a class="pill" href="{IG_URL}">Instagram&nbsp;→</a></div></div>
 </section>'''
-page('/watch/', 'Watch', watch)
+page('/watch/', 'Watch', watch, social=False)
 
 # ---------- NEXT STEPS ----------
-ns = subhero('Next Steps', 'Next <em>Steps</em>') + f'''
+ns = subhero('', 'Next <em>Steps</em>') + f'''
 <section><div class="list">
   <div class="card"><h3>I'm New</h3><p>{tag("PLACEHOLDER")} What a first visit looks like. {tag("NEEDED FROM CHURCH: what “starting in your home” means")}</p><div style="margin-top:12px"><a class="pill" href="/visit/">Plan your visit →</a></div></div>
   <div class="card"><h3>Join a Group</h3><p>Groups are listed on the church’s Church Center page. {tag("CONFIRM")}</p><div style="margin-top:12px"><a class="pill" href="{GROUPS_URL}">Browse groups →</a></div></div>
@@ -236,18 +238,20 @@ ns = subhero('Next Steps', 'Next <em>Steps</em>') + f'''
 page('/next-steps/', 'Next Steps', ns)
 
 # ---------- KIDS ----------
-kids = '''<div class="hero short" style="background:radial-gradient(circle at 25% 40%,#ffd36b 0,transparent 30%),radial-gradient(circle at 75% 60%,#5fd38d 0,transparent 35%),radial-gradient(circle at 55% 25%,#6bb8ff 0,transparent 28%),#20302a"><div class="ph-label">PLACEHOLDER PHOTO<small>Kids photo needs church permission</small></div><div class="crumb">Kids District</div><h1>Kids <em>District</em></h1></div>''' + f'''
-<section><div class="list">
+kids = '''<div class="hero short" style="background:radial-gradient(circle at 25% 40%,#ffd36b 0,transparent 30%),radial-gradient(circle at 75% 60%,#5fd38d 0,transparent 35%),radial-gradient(circle at 55% 25%,#6bb8ff 0,transparent 28%),#20302a"><div class="ph-label">PLACEHOLDER PHOTO<small>Kids photo needs church permission</small></div><h1>Kids <em>District</em></h1></div>''' + f'''
+<section>
+<div style="margin:0 0 14px"><a class="btn primary wide" href="#">Kids check in <span class="ar">→</span></a></div>
+<p class="note">{tag("PLACEHOLDER: Kids District check in link")}</p>
+<div class="list">
   <div class="card"><h3>Ages</h3><p>{tag("NEEDED FROM CHURCH: ages")}</p></div>
   <div class="card"><h3>Times</h3><p>{tag("NEEDED FROM CHURCH: kids times")}</p></div>
   <div class="card"><h3>What to expect</h3><p>{tag("NEEDED FROM CHURCH: check in steps, safety, what kids do")}</p></div>
 </div>
-<div style="margin-top:14px"><a class="btn primary wide" href="#">Kids check in <span class="ar">→</span></a></div>
-<p class="note">{tag("PLACEHOLDER: Kids District check in link")}</p></section>'''
+</section>'''
 page('/kids/', 'Kids District', kids)
 
 # ---------- MEMBERS ----------
-mem = subhero('Members Hub', 'Members <em>Hub</em>', 'Everything for church family in one place.') + f'''
+mem = subhero('', 'Members <em>Hub</em>', 'Everything for church family in one place.') + f'''
 <section>
   {HUB}
   <p class="note">Links open the church’s own tools. {tag("NEEDED FROM CHURCH: confirm each link")}</p>
@@ -269,7 +273,7 @@ BEL = [
  ('In Each Other', 'At Refuge City, unity is a core value. Being unified in the vision and mission makes us one. Every human being is uniquely gifted. When our gifts are aligned in Christ to work together we are unstoppable. We don’t expect perfection from each other but we do expect progress. We believe there is more in each of us and we provoke each other to do more!'),
  ('In You', 'Yes, you heard us. We believe in YOU! We believe that there is more to you. Maybe you have never been to church, or maybe you think that you are too far gone for God to do anything in your life. Are you a discouraged, disenchanted, depleted, and/or defeated Christian? We believe in you. Maybe you have a dream that keeps nagging at the back of your mind. You don’t believe it can happen. We love dreamers, and we believe in you!'),
 ]
-about = subhero('About', 'About <em>Us</em>') + f'''
+about = subhero('', 'About <em>Us</em>') + f'''
 <section>
   <div class="sec-h"><h2>Our Mission</h2><span class="src review-note">From refugecity.cc</span></div>
   <div class="card prose"><p>We exist to engage our community with the life changing love of Jesus for the purpose of seeing them energized, emancipated, and equipped to emerge as who God created them to be.</p></div>
@@ -286,7 +290,7 @@ about = subhero('About', 'About <em>Us</em>') + f'''
 page('/about/', 'About', about)
 
 # ---------- PRIVACY ----------
-priv = subhero('Privacy', 'Privacy') + f'''
+priv = subhero('', 'Privacy') + f'''
 <section><div class="card prose">
   <p>{tag("PLACEHOLDER: draft privacy text, needs church review")}</p>
   <p>This website does not collect or store form entries or payments itself. Forms and giving open the church’s own tools, which have their own privacy policies.</p>
