@@ -53,13 +53,14 @@ MENU_JS = '''<script>
 </script>'''
 
 def tag(t, dark=False): return f'<span class="tag{" dark" if dark else ""}">[{t}]</span>'
-TIME = '11am Sunday'
-TIME_TAG = 'TBD, confirming'
-ADDR_TAG = 'NEEDED FROM CHURCH: address TBD, 2447 vs 2457 West Point Rd, LaGrange GA 30240'
-GIVE_TAG = 'PLACEHOLDER: giving link, pending pastor'
+TIME = 'Sundays 11 AM'
+ADDR = '2457 West Point Rd, LaGrange, GA 30240'
+ADDR_NOTE = 'confirm 2457 is also the physical meeting address'
+GIVE_TAG = 'PLACEHOLDER: Church Center giving link, pending Eric'
+FORM_TAG = 'PLACEHOLDER: form connects to Planning Center workflow, pending Eric'
 
 NAV = [('/', 'Home'), ('/visit/', 'Plan Your Visit'), ('/give/', 'Give'), ('/watch/', 'Watch'),
-       ('/next-steps/', 'Next Steps'), ('/kids/', 'Kids District'), ('/members/', 'Members Hub'),
+       ('/prayer/', 'Prayer'), ('/next-steps/', 'Next Steps'), ('/members/', 'Members Hub'),
        ('/about/', 'About')]
 
 def page(path, title, body, desc='Refuge City Church in LaGrange, GA. Preview site.', social=True):
@@ -92,11 +93,11 @@ def page(path, title, body, desc='Refuge City Church in LaGrange, GA. Preview si
 {social_block}<footer>
   <div class="brand"><img src="/assets/img/logo.png" alt="">Refuge City Church</div>
   <div class="tagline">Energize · Emancipate · Equip · Emerge</div>
-  <div><b style="color:#fff">Address:</b> {tag(ADDR_TAG, True)}</div>
+  <div><b style="color:#fff">Address:</b> {ADDR}<p class="review-note">{ADDR_NOTE}</p></div>
   <div><b style="color:#fff">Contact:</b> {tag("NEEDED FROM CHURCH: phone / email", True)}</div>
-  <div><b style="color:#fff">Sundays:</b> {TIME} {tag(TIME_TAG, True)}</div>
+  <div><b>{TIME}</b></div>
   <hr>
-  <div class="foot-links"><a href="/visit/">Plan Your Visit</a><a href="/give/">Give</a><a href="/watch/">Watch</a><a href="/members/">Members</a><a href="/about/">About</a></div>
+  <div class="foot-links"><a href="/visit/">Plan Your Visit</a><a href="/give/">Give</a><a href="/watch/">Watch</a><a href="/prayer/">Prayer</a><a href="/members/">Members</a><a href="/about/">About</a></div>
   <div class="fine" style="margin-top:10px">© Refuge City Church · <a class="text-link" href="/privacy/" style="color:#cfcfcf;text-decoration:underline">Privacy</a> · Preview build, not published.</div>
 </footer>
 {MENU_JS}
@@ -117,14 +118,7 @@ def subhero(crumb, h1, sub=''):
     crumb_html = f'<div class="crumb">{crumb}</div>' if crumb else ''
     return f'''<div class="hero short">{crumb_html}<h1>{h1}</h1>{f'<p>{sub}</p>' if sub else ''}</div>'''
 
-INFO = f'''<div class="info"><b>Sundays:</b> {TIME} {tag(TIME_TAG)}<br><b>Where:</b> {tag(ADDR_TAG)}</div>'''
-
-HUB = f'''<div class="hub">
-    <a class="tile" href="#"><div class="ti">{IC_CHECK}</div><div><b>Kids District Check In</b><small>[PLACEHOLDER: check in link]</small></div><span class="ar" aria-hidden="true">↗</span></a>
-    <a class="tile" href="#"><div class="ti">{IC_APP}</div><div><b>Church App</b><small>[PLACEHOLDER: app link]</small></div><span class="ar" aria-hidden="true">↗</span></a>
-    <a class="tile" href="{GROUPS_URL}"><div class="ti">{IC_GROUPS}</div><div><b>Groups</b><small>Church Center Groups [CONFIRM]</small></div><span class="ar" aria-hidden="true">↗</span></a>
-    <a class="tile" href="#"><div class="ti">{IC_CHART}</div><div><b>Giving History</b><small>[{GIVE_TAG}]</small></div><span class="ar" aria-hidden="true">↗</span></a>
-  </div>'''
+INFO = f'''<div class="info"><b>{TIME}</b><br><b>Where:</b> {ADDR}<p class="review-note">{ADDR_NOTE}</p></div>'''
 
 STEPS = f'''<a class="step" href="/visit/"><div class="n" aria-hidden="true">01</div><div><h3>I'm New</h3><p>[PLACEHOLDER] What a first visit looks like.</p></div><span class="ar" aria-hidden="true">→</span></a>
     <a class="step" href="{GROUPS_URL}"><div class="n" aria-hidden="true">02</div><div><h3>Join a Group</h3><p>Browse groups on Church Center. [CONFIRM]</p></div><span class="ar" aria-hidden="true">→</span></a>
@@ -134,7 +128,8 @@ STEPS = f'''<a class="step" href="/visit/"><div class="n" aria-hidden="true">01<
 home = f'''<div class="hero">
   <div class="ph-label">PLACEHOLDER PHOTO<small>Family at home / church family moment</small></div>
   <div class="eyebrow">Refuge City Church · LaGrange, GA</div>
-  <h1><em>Family.</em> Building. Together.<span class="sub">Starting in your home.</span></h1>
+  <h1 class="phrase">There is more to you and we want to help you discover it.</h1>
+  <p class="family">Family. Building. Together. Starting in your home.</p>
 </div>
 <div class="ctas">
   <a class="btn primary" href="/visit/">Plan Your Visit <span class="ar">→</span></a>
@@ -142,8 +137,8 @@ home = f'''<div class="hero">
   <a class="btn light" href="/watch/"><span>Watch<span class="soon">COMING SOON</span></span> <span class="ar">→</span></a>
 </div>
 {INFO}
-<p class="quote">“There is more to you and we want to help you discover it.”</p>
-<p class="review-note">From Refuge City's Church Center page</p>
+<div class="words" aria-label="Energize, Emancipate, Equip, Emerge"><span>Energize</span><span>Emancipate</span><span>Equip</span><span>Emerge</span></div>
+<section class="tight"><a class="btn light" href="/prayer/">Prayer request <span class="ar">→</span></a></section>
 <section>
   <div class="sec-h"><h2>We Believe</h2><span class="src review-note">From refugecity.cc</span></div>
   <div class="card values">
@@ -160,57 +155,187 @@ home = f'''<div class="hero">
     {STEPS}
   </div>
 </section>
-<section>
+<section id="kids">
   <div class="kids">
     <div class="ph"><span>PLACEHOLDER PHOTO · KIDS</span></div>
     <div class="body">
       <h2>Kids <em>District</em></h2>
       <p>{tag("PLACEHOLDER", True)} Short description of the kids ministry. {tag("NEEDED FROM CHURCH: ages / times", True)}</p>
-      <a class="pill" href="/kids/">Learn more →</a>
+      <a class="btn primary" href="#">Kids check in <span class="ar">→</span></a>
+      <p class="note">{tag("PLACEHOLDER: Kids District check in link")}</p>
     </div>
   </div>
 </section>
 <section>
-  <div class="sec-h"><h2>Members Hub</h2><a href="/members/">Open hub&nbsp;→</a></div>
-  {HUB}
+  <div class="sec-h"><h2>Members Hub</h2></div>
+  <a class="btn primary" href="/resources/">Church family? Open Refuge Resources <span class="ar">→</span></a>
 </section>'''
 page('/', 'Home', home)
+
+VISIT_JS = r'''<script>
+(function(){
+  var dates = document.getElementById('visit-dates');
+  if (!dates) return;
+  var now = new Date();
+  var add = (7 - now.getDay()) % 7;
+  for (var i = 0; i < 4; i++) {
+    var day = new Date(now.getFullYear(), now.getMonth(), now.getDate() + add + i * 7);
+    var b = document.createElement('button');
+    b.type = 'button';
+    b.textContent = day.toLocaleDateString('en-US', {month:'short', day:'numeric'});
+    b.setAttribute('aria-pressed', 'false');
+    dates.appendChild(b);
+  }
+  function choose(root){
+    root.addEventListener('click', function(e){
+      var b = e.target.closest('button');
+      if (!b || !root.contains(b)) return;
+      var all = root.querySelectorAll('button');
+      for (var n = 0; n < all.length; n++) all[n].setAttribute('aria-pressed', 'false');
+      b.setAttribute('aria-pressed', 'true');
+    });
+  }
+  choose(dates);
+  choose(document.getElementById('visit-kidsjoin'));
+  choose(document.getElementById('visit-seats'));
+  function counter(minusId, plusId, outId){
+    var n = outId === 'adults-n' ? 1 : 0;
+    var out = document.getElementById(outId);
+    document.getElementById(minusId).addEventListener('click', function(){ if (n > 0) { n--; out.textContent = String(n); } });
+    document.getElementById(plusId).addEventListener('click', function(){ if (n < 12) { n++; out.textContent = String(n); } });
+  }
+  counter('adults-minus', 'adults-plus', 'adults-n');
+  counter('kids-minus', 'kids-plus', 'kids-n');
+  document.getElementById('visit-form').addEventListener('submit', function(e){
+    e.preventDefault();
+    document.getElementById('visit-form').hidden = true;
+    var welcome = document.getElementById('visit-welcome');
+    welcome.hidden = false;
+    welcome.focus();
+  });
+})();
+</script>'''
 
 # ---------- VISIT ----------
 visit = subhero('Plan Your Visit', 'We can’t wait to <em>know you!</em>') + f'''
 {INFO}
+<section class="tight">
+  <p>Every first time guest gets a host who stays with them all Sunday.</p>
+</section>
+<section>
+  <div class="yt-box"><span>Pre-visit video</span></div>
+  <p class="note">{tag("NEEDED FROM CHURCH: video: where to park, walking in the door, what to expect")}</p>
+</section>
 <section>
   <a class="btn primary wide" href="#">Open map <span class="ar">→</span></a>
-  <p class="note">{tag("PLACEHOLDER: map link, waiting on confirmed address")}</p>
+  <p class="note">{tag("PLACEHOLDER: map link")}</p>
 </section>
 <section>
-  <div class="sec-h"><h2>What to Expect</h2></div>
-  <div class="card prose"><p>{tag("NEEDED FROM CHURCH: parking and where to walk in")}</p><p>{tag("NEEDED FROM CHURCH: what happens for kids on Sunday")}</p><p>{tag("NEEDED FROM CHURCH: how long service runs, what to wear")}</p>
-  <p>Look for Reggie! He will help you find us!</p><p class="review-note">From the church’s Church Center page.</p></div>
-</section>
-<section>
-  <div class="sec-h"><h2>Let Us Know</h2>{tag("PREVIEW ONLY")}</div>
-  <div class="card">
-    <p class="note" style="margin:0 0 6px">This form does not send anything. The real form will be a Planning Center form. {tag("PLACEHOLDER: Planning Center form link, pending pastor")}</p>
-    <form class="form" onsubmit="return false" aria-label="Plan your visit (preview, does not submit)">
-      <label for="visit-name">First and last name</label><input id="visit-name" disabled placeholder="Name">
-      <label for="visit-email">Email</label><input id="visit-email" disabled placeholder="you@example.com">
-      <label for="visit-phone">Phone (optional)</label><input id="visit-phone" disabled placeholder="Phone">
-      <label for="visit-sunday">What Sunday are you coming?</label><input id="visit-sunday" disabled placeholder="Pick a Sunday">
-      <label for="visit-party">How many adults? How many kids, and ages?</label><input id="visit-party" disabled placeholder="2 adults, 2 kids (5 and 8)">
-      <label for="visit-note">Anything we should know?</label><textarea id="visit-note" disabled rows="3"></textarea>
-      <button class="btn primary wide" type="button" disabled>Send (preview only)</button>
-    </form>
+  <div class="sec-h"><h2>Let us know</h2></div>
+  <p class="note">{tag(FORM_TAG)}</p>
+  <form id="visit-form" class="form" action="#" method="post" aria-label="Plan your visit (preview, does not send)">
+    <fieldset>
+      <legend>What Sunday are you coming?</legend>
+      <div class="choices" id="visit-dates"></div>
+    </fieldset>
+    <label for="visit-from">Where are you coming from?</label>
+    <input id="visit-from" name="from" autocomplete="off" maxlength="80">
+    <p class="count-label" id="adults-label">Adults</p>
+    <div class="counter"><button type="button" id="adults-minus" aria-label="Fewer adults">−</button><span class="n" id="adults-n">1</span><button type="button" id="adults-plus" aria-label="More adults">+</button></div>
+    <p class="count-label" id="kids-label">Kids</p>
+    <div class="counter"><button type="button" id="kids-minus" aria-label="Fewer kids">−</button><span class="n" id="kids-n">0</span><button type="button" id="kids-plus" aria-label="More kids">+</button></div>
+    <fieldset>
+      <legend>Will your kids join Kids District?</legend>
+      <div class="choices" id="visit-kidsjoin">
+        <button type="button" aria-pressed="false">Yes</button>
+        <button type="button" aria-pressed="false">No</button>
+        <button type="button" aria-pressed="false">No kids</button>
+      </div>
+    </fieldset>
+    <fieldset>
+      <legend>Where would you like to sit?</legend>
+      <p class="note">We ask because we'll save your seats.</p>
+      <div class="choices" id="visit-seats">
+        <button type="button" aria-pressed="false">Front</button>
+        <button type="button" aria-pressed="false">Middle</button>
+        <button type="button" aria-pressed="false">Back</button>
+      </div>
+    </fieldset>
+    <label for="visit-name">Name</label>
+    <input id="visit-name" name="name" autocomplete="name">
+    <label for="visit-phone">Phone</label>
+    <input id="visit-phone" name="phone" autocomplete="tel" inputmode="tel">
+    <label for="visit-email">Email</label>
+    <input id="visit-email" name="email" autocomplete="email" inputmode="email">
+    <label for="visit-note">Anything else? (optional)</label>
+    <textarea id="visit-note" name="note" rows="3"></textarea>
+    <button class="btn primary wide" type="submit">Send</button>
+  </form>
+  <div id="visit-welcome" class="card welcome" tabindex="-1" hidden>
+    <h2>We're so glad you're coming.</h2>
+    <p>We look forward to meeting you.</p>
+    <p>A host will reach out before Sunday.</p>
+    <p class="note">{tag(FORM_TAG)}</p>
   </div>
-</section>'''
+</section>
+{VISIT_JS}'''
 page('/visit/', 'Plan Your Visit', visit)
+
+PRAYER_JS = r'''<script>
+(function(){
+  var form = document.getElementById('prayer-form');
+  if (!form) return;
+  var choices = document.getElementById('prayer-share');
+  choices.addEventListener('click', function(e){
+    var b = e.target.closest('button');
+    if (!b) return;
+    var all = choices.querySelectorAll('button');
+    for (var i = 0; i < all.length; i++) all[i].setAttribute('aria-pressed', 'false');
+    b.setAttribute('aria-pressed', 'true');
+  });
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+    form.hidden = true;
+    var done = document.getElementById('prayer-done');
+    done.hidden = false;
+    done.focus();
+  });
+})();
+</script>'''
+
+prayer = subhero('', 'Prayer') + f'''
+<section>
+  <p class="note">{tag(FORM_TAG)}</p>
+  <form id="prayer-form" class="form" action="#" method="post" aria-label="Prayer request (preview, does not send)">
+    <label for="prayer-name">Name (optional)</label>
+    <input id="prayer-name" name="name" autocomplete="name">
+    <label for="prayer-request">Request</label>
+    <textarea id="prayer-request" name="request" rows="4"></textarea>
+    <label for="prayer-contact">Phone or email (optional)</label>
+    <input id="prayer-contact" name="contact" autocomplete="on">
+    <fieldset>
+      <legend>Share with prayer team?</legend>
+      <div class="choices" id="prayer-share">
+        <button type="button" aria-pressed="false">Yes</button>
+        <button type="button" aria-pressed="false">No</button>
+      </div>
+    </fieldset>
+    <button class="btn primary wide" type="submit">Send</button>
+  </form>
+  <div id="prayer-done" class="card welcome" tabindex="-1" hidden>
+    <p>Nothing was sent. This is a preview.</p>
+    <p class="note">{tag(FORM_TAG)}</p>
+  </div>
+</section>
+{PRAYER_JS}'''
+page('/prayer/', 'Prayer', prayer)
 
 # ---------- GIVE ----------
 give = subhero('', 'Give', tag(GIVE_TAG, True)) + f'''
 <section>
   <div class="card prose"><p>{tag("NEEDED FROM CHURCH: short giving message in the pastor’s words")}</p></div>
-  <div style="margin-top:14px"><a class="btn primary wide" href="#">Give online <span class="ar">→</span></a></div>
-  <p class="note">{tag(GIVE_TAG)} <span class="review-note">The button will link out to the giving tool the pastor keeps. This site never handles payments.</span></p>
+  <div style="margin-top:14px"><a class="btn primary wide" href="#">Planning Center Giving <span class="ar">→</span></a></div>
+  <p class="note">{tag(GIVE_TAG)} <span class="review-note">This site never handles payments.</span></p>
 </section>
 <section>
   <div class="sec-h"><h2>Giving History</h2></div>
@@ -221,10 +346,9 @@ page('/give/', 'Give', give)
 # ---------- WATCH ----------
 watch = subhero('', 'Watch', '') + f'''
 <section>
-  <div class="card soon-card"><span class="soon" style="font:700 11px Inter;background:#ffe78a;color:#4a3800;padding:6px 10px;border-radius:999px">COMING SOON</span>
-  <div class="big">Live stream</div>
-  <p class="prose">The live stream will show up here. {tag("NEEDED FROM CHURCH: stream platform and channel")}</p></div>
-  <div class="card prose" style="margin-top:12px"><p>Until then, find us here:</p><div class="social-pills"><a class="pill" href="{FB_URL}">Facebook&nbsp;→</a><a class="pill" href="{IG_URL}">Instagram&nbsp;→</a></div></div>
+  <div class="yt-box"><span>Live stream coming soon, streaming on YouTube</span></div>
+  <p class="note">{tag("NEEDED FROM CHURCH: YouTube channel or live URL")}</p>
+  <div class="social-pills"><a class="pill" href="{FB_URL}">Facebook&nbsp;→</a><a class="pill" href="{IG_URL}">Instagram&nbsp;→</a></div>
 </section>'''
 page('/watch/', 'Watch', watch, social=False)
 
@@ -237,34 +361,49 @@ ns = subhero('', 'Next <em>Steps</em>') + f'''
 </div></section>'''
 page('/next-steps/', 'Next Steps', ns)
 
-# ---------- KIDS ----------
-kids = '''<div class="hero short" style="background:radial-gradient(circle at 25% 40%,#ffd36b 0,transparent 30%),radial-gradient(circle at 75% 60%,#5fd38d 0,transparent 35%),radial-gradient(circle at 55% 25%,#6bb8ff 0,transparent 28%),#20302a"><div class="ph-label">PLACEHOLDER PHOTO<small>Kids photo needs church permission</small></div><h1>Kids <em>District</em></h1></div>''' + f'''
-<section>
-<div style="margin:0 0 14px"><a class="btn primary wide" href="#">Kids check in <span class="ar">→</span></a></div>
-<p class="note">{tag("PLACEHOLDER: Kids District check in link")}</p>
-<div class="list">
-  <div class="card"><h3>Ages</h3><p>{tag("NEEDED FROM CHURCH: ages")}</p></div>
-  <div class="card"><h3>Times</h3><p>{tag("NEEDED FROM CHURCH: kids times")}</p></div>
-  <div class="card"><h3>What to expect</h3><p>{tag("NEEDED FROM CHURCH: check in steps, safety, what kids do")}</p></div>
-</div>
-</section>'''
-page('/kids/', 'Kids District', kids)
+# ---------- KIDS (old links redirect home) ----------
+kids_dir = OUT / 'kids'
+kids_dir.mkdir(parents=True, exist_ok=True)
+(kids_dir / 'index.html').write_text('''<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<meta http-equiv="refresh" content="0; url=../#kids">
+<title>Kids District | Refuge City Church</title>
+<link rel="icon" href="../assets/img/logo.png">
+</head><body>
+<p><a href="../#kids">Kids District is on the home page.</a></p>
+</body></html>
+''')
 
 # ---------- MEMBERS ----------
-mem = subhero('', 'Members <em>Hub</em>', 'Everything for church family in one place.') + f'''
+mem = subhero('', 'Members <em>Hub</em>') + f'''
 <section>
-  {HUB}
-  <p class="note">Links open the church’s own tools. {tag("NEEDED FROM CHURCH: confirm each link")}</p>
+  <a class="btn primary" href="/resources/">Church family? Open Refuge Resources <span class="ar">→</span></a>
 </section>
 <section>
   <div class="sec-h"><h2>More</h2></div>
   <div class="list">
     <a class="btn light" href="/next-steps/">Next Steps <span class="ar">→</span></a>
-    <a class="btn light" href="/kids/">Kids District <span class="ar">→</span></a>
+    <a class="btn light" href="/#kids">Kids District <span class="ar">→</span></a>
     <a class="btn light" href="/give/">Give <span class="ar">→</span></a>
   </div>
 </section>'''
 page('/members/', 'Members Hub', mem)
+
+# ---------- RESOURCES (unlisted) ----------
+resources = subhero('', 'Refuge <em>Resources</em>') + f'''
+<section>
+  <p>This page is for our church family.</p>
+  <div class="hub">
+    <a class="tile" href="#"><div class="ti">{IC_APP}</div><div><b>Right Now Media</b><small>[PLACEHOLDER: Right Now Media link]</small></div><span class="ar" aria-hidden="true">↗</span></a>
+    <a class="tile" href="#"><div class="ti">{IC_CHECK}</div><div><b>Kids District Check In</b><small>[PLACEHOLDER: Kids District check in link]</small></div><span class="ar" aria-hidden="true">↗</span></a>
+    <a class="tile" href="#"><div class="ti">{IC_APP}</div><div><b>Church App</b><small>[PLACEHOLDER: app link]</small></div><span class="ar" aria-hidden="true">↗</span></a>
+    <a class="tile" href="#"><div class="ti">{IC_GROUPS}</div><div><b>Groups</b><small>[PLACEHOLDER: groups link]</small></div><span class="ar" aria-hidden="true">↗</span></a>
+    <a class="tile" href="#"><div class="ti">{IC_CHART}</div><div><b>City Resources</b><small>Coming soon</small><small>[PLACEHOLDER: City Resources link]</small></div><span class="ar" aria-hidden="true">↗</span></a>
+  </div>
+</section>'''
+page('/resources/', 'Refuge Resources', resources)
 
 # ---------- ABOUT ----------
 BEL = [
@@ -282,6 +421,10 @@ about = subhero('', 'About <em>Us</em>') + f'''
   <div class="sec-h"><h2>We Believe</h2><span class="src review-note">From refugecity.cc</span></div>
   <div class="list">{''.join(f'<div class="card"><h3>{h}</h3><p>{t}</p></div>' for h, t in BEL)}</div>
   <p class="note review-note">Text copied from the church’s current site.</p>
+</section>
+<section>
+  <div class="sec-h"><h2>Sundays</h2></div>
+  <div class="card prose"><p><b>{TIME}</b></p><p><b>Address:</b> {ADDR}</p><p class="review-note">{ADDR_NOTE}</p></div>
 </section>
 <section>
   <div class="sec-h"><h2>Our Pastor</h2></div>
