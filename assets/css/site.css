@@ -6,6 +6,7 @@ a{color:inherit;text-decoration:none}
 .tag{display:inline-block;font:700 10px/1 Inter,sans-serif;letter-spacing:.6px;text-transform:uppercase;padding:4px 7px;border-radius:999px;background:#fff3c4;color:#6b4e00;border:1px dashed #c9a227;vertical-align:middle}
 .tag.dark{background:rgba(255,255,255,.12);color:#ffe78a;border-color:#ffe78a}
 header{position:sticky;top:0;z-index:20;display:flex;align-items:center;justify-content:space-between;padding:12px 18px;background:var(--black);color:#fff}
+header .brand{min-height:44px}
 .brand{display:flex;align-items:center;gap:10px;font:700 18px Oswald,sans-serif;text-transform:uppercase}
 .brand img{width:40px;height:40px;border-radius:8px}
 .menu{width:48px;height:48px;border-radius:12px;background:#1f1f1f;display:grid;place-items:center;position:relative;z-index:3}
@@ -67,16 +68,17 @@ a.text-link{display:inline-flex;align-items:center;min-height:44px}
 .kids p{font-size:14.5px;line-height:1.5;opacity:.88;margin:10px 0 16px;color:#fff}
 .pill{display:inline-flex;align-items:center;gap:8px;background:var(--green-d);color:#fff;padding:13px 18px;border-radius:999px;font:700 15px Inter}
 .hub{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-.tile{background:#fff;border:2px solid #1b1b1b;border-radius:20px;padding:16px;min-height:118px;display:flex;flex-direction:column;justify-content:flex-start}
+.tile{position:relative;background:#fff;border:2px solid #1b1b1b;border-radius:20px;padding:16px;min-height:118px;display:flex;flex-direction:column;justify-content:flex-start}
+.tile .ar{position:absolute;top:14px;right:14px;font-size:20px;line-height:1;color:#1b1b1b}
 .tile .ti{width:40px;height:40px;border-radius:12px;background:var(--black);display:grid;place-items:center}
 .tile .ti svg{width:22px;height:22px;stroke:#5fd38d;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 .tile b{font:700 17px Oswald;text-transform:uppercase;line-height:1.1;display:block;margin-top:12px}
-.tile small{display:block;font-size:11px;color:var(--mute);margin-top:4px}
+.tile small{display:block;font-size:13px;line-height:1.35;color:var(--mute);margin-top:4px}
 .social{display:flex;justify-content:center;gap:16px;padding:34px 18px 8px}
 .social a{width:56px;height:56px;border-radius:18px;background:var(--black);display:grid;place-items:center;position:relative}
 .social svg{width:26px;height:26px;fill:#fff}
 .social a.ph::after{content:"PH";position:absolute;top:-6px;right:-6px;font:700 9px Inter;background:#ffe78a;color:#4a3800;padding:3px 5px;border-radius:999px}
-.soc-note{text-align:center;font-size:11px;color:var(--mute);padding:0 24px}
+.soc-note{text-align:center;font-size:12px;color:var(--mute);padding:0 24px}
 footer{margin-top:26px;background:var(--black);color:#cfcfcf;padding:28px 20px 34px;border-radius:32px 32px 0 0;font-size:14px;line-height:1.6}
 footer .brand{color:#fff;margin-bottom:12px}
 footer .tagline{font:500 13px Oswald;letter-spacing:1.5px;text-transform:uppercase;color:#8de0ad;margin-bottom:14px}
@@ -89,7 +91,8 @@ footer .fine{font-size:12px;color:#8a8a8a}
 .src.dark{color:#8de0ad;background:rgba(32,157,80,.18)}
 /* Hidden now. At launch, hide .banner the same way: one class, display:none. */
 .review-note{display:none}
-.note{font-size:12px;color:var(--mute);margin-top:10px}
+.note{font-size:13px;color:var(--mute);margin-top:10px}
+.note a.text-link{font-size:15px}
 
 /* site additions */
 .hero.short{min-height:230px}
@@ -121,4 +124,12 @@ footer .fine{font-size:12px;color:#8a8a8a}
 .foot-social a{width:44px;height:44px;border-radius:14px;background:#1f1f1f;display:grid;place-items:center}
 .foot-social svg{width:22px;height:22px;fill:#fff}
 .skip{position:absolute;left:-999px}.skip:focus{left:10px;top:10px;z-index:99;background:#fff;color:#000;padding:8px}
+:focus-visible{outline:3px solid #1b1b1b;outline-offset:3px}
+header :focus-visible,
+footer :focus-visible,
+.nav .panel a:focus-visible,
+.step:focus-visible,
+.kids :focus-visible,
+.hero :focus-visible{outline-color:#fff}
+footer .fine a.text-link{display:inline;min-height:0;padding:0 2px;font-size:12px;color:#cfcfcf;text-decoration:underline;text-underline-offset:3px}
 .hero.short:not([style]){min-height:0;padding-top:32px;padding-bottom:24px;background:radial-gradient(circle at 85% 10%,rgba(32,157,80,.55) 0,transparent 55%),linear-gradient(160deg,#1d231c,#0e0e0e)}

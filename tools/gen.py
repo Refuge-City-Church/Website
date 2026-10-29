@@ -60,7 +60,7 @@ GIVE_TAG = 'PLACEHOLDER: giving link, pending pastor'
 
 NAV = [('/', 'Home'), ('/visit/', 'Plan Your Visit'), ('/give/', 'Give'), ('/watch/', 'Watch'),
        ('/next-steps/', 'Next Steps'), ('/kids/', 'Kids District'), ('/members/', 'Members Hub'),
-       ('/about/', 'About'), ('/privacy/', 'Privacy')]
+       ('/about/', 'About')]
 
 def page(path, title, body, desc='Refuge City Church in LaGrange, GA. Preview site.', social=True):
     nav = ''.join(f'<a href="{h}"{" aria-current=\"page\"" if h == path else ""}>{n}</a>' for h, n in NAV)
@@ -69,7 +69,7 @@ def page(path, title, body, desc='Refuge City Church in LaGrange, GA. Preview si
   <a href="{IG_URL}" aria-label="Instagram">{IG}</a>
   <a class="ph" href="#" aria-label="YouTube (placeholder)">{YT}</a>
 </div>
-<p class="soc-note">Facebook: Refuge City Church · Instagram: @refugecity.cc<br>YouTube link: [NEEDED FROM CHURCH: channel URL]</p>
+<p class="soc-note">YouTube link: [NEEDED FROM CHURCH: channel URL]</p>
 ''' if social else ''
     html = f'''<!DOCTYPE html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
@@ -83,7 +83,7 @@ def page(path, title, body, desc='Refuge City Church in LaGrange, GA. Preview si
 <a class="skip" href="#main">Skip to content</a>
 <div class="banner">PREVIEW SITE · Items tagged in yellow are placeholders until confirmed by the church</div>
 <header>
-  <a class="brand" href="/"><img src="/assets/img/logo.png" alt="Refuge City Church logo">Refuge City</a>
+  <a class="brand" href="/" aria-label="Refuge City Church, home"><img src="/assets/img/logo.png" alt="">Refuge City</a>
   <details class="nav"><summary class="menu" aria-label="Menu" aria-expanded="false" aria-controls="site-menu"><span></span></summary><button type="button" class="nav-backdrop" tabindex="-1" aria-hidden="true"></button><nav class="panel" id="site-menu">{nav}</nav></details>
 </header>
 <main id="main">
@@ -96,8 +96,8 @@ def page(path, title, body, desc='Refuge City Church in LaGrange, GA. Preview si
   <div><b style="color:#fff">Contact:</b> {tag("NEEDED FROM CHURCH: phone / email", True)}</div>
   <div><b style="color:#fff">Sundays:</b> {TIME} {tag(TIME_TAG, True)}</div>
   <hr>
-  <div class="foot-links"><a href="/visit/">Plan Your Visit</a><a href="/give/">Give</a><a href="/watch/">Watch</a><a href="/members/">Members</a><a href="/about/">About</a><a href="/privacy/">Privacy</a></div>
-  <div class="fine" style="margin-top:10px">© Refuge City Church · Preview build, not published.</div>
+  <div class="foot-links"><a href="/visit/">Plan Your Visit</a><a href="/give/">Give</a><a href="/watch/">Watch</a><a href="/members/">Members</a><a href="/about/">About</a></div>
+  <div class="fine" style="margin-top:10px">© Refuge City Church · <a class="text-link" href="/privacy/" style="color:#cfcfcf;text-decoration:underline">Privacy</a> · Preview build, not published.</div>
 </footer>
 {MENU_JS}
 </body></html>
@@ -120,10 +120,10 @@ def subhero(crumb, h1, sub=''):
 INFO = f'''<div class="info"><b>Sundays:</b> {TIME} {tag(TIME_TAG)}<br><b>Where:</b> {tag(ADDR_TAG)}</div>'''
 
 HUB = f'''<div class="hub">
-    <a class="tile" href="#"><div class="ti">{IC_CHECK}</div><div><b>Kids District Check In</b><small>[PLACEHOLDER: check in link]</small></div></a>
-    <a class="tile" href="#"><div class="ti">{IC_APP}</div><div><b>Church App</b><small>[PLACEHOLDER: app link]</small></div></a>
-    <a class="tile" href="{GROUPS_URL}"><div class="ti">{IC_GROUPS}</div><div><b>Groups</b><small>Church Center Groups [CONFIRM]</small></div></a>
-    <a class="tile" href="#"><div class="ti">{IC_CHART}</div><div><b>Giving History</b><small>[{GIVE_TAG}]</small></div></a>
+    <a class="tile" href="#"><div class="ti">{IC_CHECK}</div><div><b>Kids District Check In</b><small>[PLACEHOLDER: check in link]</small></div><span class="ar" aria-hidden="true">↗</span></a>
+    <a class="tile" href="#"><div class="ti">{IC_APP}</div><div><b>Church App</b><small>[PLACEHOLDER: app link]</small></div><span class="ar" aria-hidden="true">↗</span></a>
+    <a class="tile" href="{GROUPS_URL}"><div class="ti">{IC_GROUPS}</div><div><b>Groups</b><small>Church Center Groups [CONFIRM]</small></div><span class="ar" aria-hidden="true">↗</span></a>
+    <a class="tile" href="#"><div class="ti">{IC_CHART}</div><div><b>Giving History</b><small>[{GIVE_TAG}]</small></div><span class="ar" aria-hidden="true">↗</span></a>
   </div>'''
 
 STEPS = f'''<a class="step" href="/visit/"><div class="n" aria-hidden="true">01</div><div><h3>I'm New</h3><p>[PLACEHOLDER] What a first visit looks like.</p></div><span class="ar" aria-hidden="true">→</span></a>
@@ -193,12 +193,12 @@ visit = subhero('Plan Your Visit', 'We can’t wait to <em>know you!</em>') + f'
   <div class="card">
     <p class="note" style="margin:0 0 6px">This form does not send anything. The real form will be a Planning Center form. {tag("PLACEHOLDER: Planning Center form link, pending pastor")}</p>
     <form class="form" onsubmit="return false" aria-label="Plan your visit (preview, does not submit)">
-      <label>First and last name</label><input disabled placeholder="Name">
-      <label>Email</label><input disabled placeholder="you@example.com">
-      <label>Phone (optional)</label><input disabled placeholder="Phone">
-      <label>What Sunday are you coming?</label><input disabled placeholder="Pick a Sunday">
-      <label>How many adults? How many kids, and ages?</label><input disabled placeholder="2 adults, 2 kids (5 and 8)">
-      <label>Anything we should know?</label><textarea disabled rows="3"></textarea>
+      <label for="visit-name">First and last name</label><input id="visit-name" disabled placeholder="Name">
+      <label for="visit-email">Email</label><input id="visit-email" disabled placeholder="you@example.com">
+      <label for="visit-phone">Phone (optional)</label><input id="visit-phone" disabled placeholder="Phone">
+      <label for="visit-sunday">What Sunday are you coming?</label><input id="visit-sunday" disabled placeholder="Pick a Sunday">
+      <label for="visit-party">How many adults? How many kids, and ages?</label><input id="visit-party" disabled placeholder="2 adults, 2 kids (5 and 8)">
+      <label for="visit-note">Anything we should know?</label><textarea id="visit-note" disabled rows="3"></textarea>
       <button class="btn primary wide" type="button" disabled>Send (preview only)</button>
     </form>
   </div>
